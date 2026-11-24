@@ -37,16 +37,18 @@ export const viewport: Viewport = {
 };
 
 export default async function IndexRoute({ children }: PropsWithChildren) {
+  const isDraftMode = (await draftMode()).isEnabled;
+
   return (
     <>
-      <Toaster />
-      {(await draftMode()).isEnabled && (
+      {isDraftMode && <Toaster />}
+      {isDraftMode && (
         <>
           <DraftModeToast />
           <VisualEditing />
         </>
       )}
-      <SanityLive onError={handleError} />
+      <SanityLive onError={isDraftMode ? handleError : undefined} />
 
       {children}
     </>
