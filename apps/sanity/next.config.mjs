@@ -9,7 +9,10 @@ const config = {
     root: path.resolve(__dirname, "../.."),
   },
   images: {
-    remotePatterns: [{ hostname: "cdn.sanity.io", protocol: "https" }],
+    remotePatterns: [
+      { hostname: "cdn.sanity.io", protocol: "https" },
+      { hostname: "images.unsplash.com", protocol: "https" },
+    ],
   },
   typescript: {
     // Set this to false if you want production builds to abort if there's type errors
