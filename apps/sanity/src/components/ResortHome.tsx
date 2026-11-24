@@ -97,7 +97,7 @@ export default function ResortHome() {
       </header>
 
       <section className="hero" id="home" aria-labelledby="hero-title">
-        <div className="hero-image" role="img" aria-label="A tranquil lakeside landscape at golden hour" />
+        <div className="hero-image" role="img" aria-label="A tree-lined aerial view of the Grand Alton Resort" />
         <div className="hero-shade" />
         <div className="hero-meta"><span>EST. 2024</span><span>OTONGLO · KISUMU, KENYA</span></div>
         <div className="hero-content">

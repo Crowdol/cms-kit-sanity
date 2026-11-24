@@ -59,7 +59,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .menu-toggle { display: none; }
 .hero { position: relative; min-height: min(850px, 92vh); min-height: min(850px, 92svh); display: flex; align-items: center; overflow: hidden; color: white; background: #46554b; }
 .hero-image, .hero-shade, .gather-image, .gather-shade { position: absolute; inset: 0; }
-.hero-image { background-image: url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=2400&q=90'); background-position: center 49%; background-size: cover; transform: scale(1.015); }
+.hero-image { background-image: url('/grand-alton-hero.jpeg'); background-position: center 49%; background-size: cover; transform: scale(1.015); }
 .hero-shade { background: linear-gradient(90deg, rgb(18 30 23 / 69%) 0%, rgb(18 30 23 / 37%) 48%, rgb(18 30 23 / 10%) 100%), linear-gradient(0deg, rgb(18 30 23 / 38%), transparent 35%); }
 .hero-meta, .hero-bottom { position: absolute; z-index: 1; left: clamp(24px, 5.3vw, 84px); right: clamp(24px, 5.3vw, 84px); display: flex; justify-content: space-between; font-size: 9px; letter-spacing: .18em; }
 .hero-meta { top: 116px; }
