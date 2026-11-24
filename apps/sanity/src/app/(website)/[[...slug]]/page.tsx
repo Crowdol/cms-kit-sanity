@@ -8,6 +8,7 @@ import { sanityFetch } from "@/lib/live";
 import { generateStaticSlugs } from "@/lib/loader/generateStaticSlugs";
 import { urlForOpenGraphImage } from "@/lib/utils";
 import Page from "@/components/Page";
+import ResortHome from "@/components/ResortHome";
 import type { IPageWithReference } from "@/components/Page/types";
 
 type Props = {
@@ -23,6 +24,21 @@ const getSlug = (params: { slug: string[] | undefined }) => {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
+
+  if (!params.slug?.length) {
+    return {
+      title: "The Grand Alton Resort | Kisumu, Kenya",
+      description:
+        "Discover thoughtful stays, dining, and celebrations at The Grand Alton Resort in Kisumu, just five minutes from Kisumu International Airport.",
+      openGraph: {
+        title: "The Grand Alton Resort | Kisumu, Kenya",
+        description:
+          "A welcoming retreat for stays, dining, and celebrations in Kisumu, Kenya.",
+        type: "website",
+      },
+    };
+  }
+
   const slug = getSlug(params);
 
   if (!slug) {
@@ -65,6 +81,11 @@ export async function generateStaticParams() {
 
 export default async function PageSlugRoute(props: Props) {
   const params = await props.params;
+
+  if (!params.slug?.length) {
+    return <ResortHome />;
+  }
+
   const slug = getSlug(params);
 
   if (!slug) {
