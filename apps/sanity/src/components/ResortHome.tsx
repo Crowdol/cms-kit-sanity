@@ -177,7 +177,7 @@ export default function ResortHome() {
 
       <footer className="site-footer">
         <div className="footer-top"><div><a className="brand footer-brand" href="#home" aria-label="The Grand Alton Resort home"><Image className="brand-logo" src="/grand-alton-logo.png" alt="The Grand Alton Resort — Grand moments start here" width={1334} height={768} /></a><p className="footer-tagline">A warm welcome.<br /><em>A place to pause.</em></p></div><div className="footer-column"><span className="eyebrow">COME FIND US</span><p>Otonglo, behind Kodiaga Prison<br />Kisumu, Western Kenya</p><a href="https://maps.google.com/?q=The+Grand+Alton+Resort+Kisumu" target="_blank" rel="noreferrer">GET DIRECTIONS ↗</a></div><div className="footer-column"><span className="eyebrow">SAY HELLO</span><a href="tel:+254794000020">+254 794 000 020</a><a href="mailto:thegrandaltonresort@gmail.com">thegrandaltonresort@gmail.com</a><a href={bookingLink} target="_blank" rel="noreferrer">WHATSAPP ↗</a></div><a className="footer-book" href={bookingLink} target="_blank" rel="noreferrer">Your Kisumu<br /><em>stay starts here.</em><span aria-hidden="true">↗</span></a></div>
-        <div className="footer-bottom"><span>© {new Date().getFullYear()} THE GRAND ALTON RESORT</span><span>MADE WITH CARE IN KISUMU, KENYA</span><a href="#home">BACK TO TOP ↑</a></div>
+        <div className="footer-bottom"><span>© {new Date().getFullYear()} THE GRAND ALTON RESORT</span><a href="https://crowdol.com" target="_blank" rel="noreferrer">MADE WITH CARE IN KISUMU, KENYA</a><a href="#home">BACK TO TOP ↑</a></div>
       </footer>
     </main>
   );
