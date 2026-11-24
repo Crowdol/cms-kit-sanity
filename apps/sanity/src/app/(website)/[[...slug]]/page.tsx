@@ -1,5 +1,4 @@
 import { type Metadata } from "next";
-import { Suspense } from "react";
 import type { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
 import { notFound } from "next/navigation";
 import type { Page as PageType } from "@/generated/extracted-types";
@@ -84,11 +83,7 @@ export default async function PageSlugRoute(props: Props) {
   const params = await props.params;
 
   if (!params.slug?.length) {
-    return (
-      <Suspense fallback={null}>
-        <ResortHome />
-      </Suspense>
-    );
+    return <ResortHome />;
   }
 
   const slug = getSlug(params);
