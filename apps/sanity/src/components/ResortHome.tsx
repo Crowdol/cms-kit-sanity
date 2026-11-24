@@ -4,14 +4,18 @@ import { useState } from "react";
 import Image from "next/image";
 
 const bookingLink = "https://wa.me/254794000020";
+const getRoomBookingLink = (roomName: string) =>
+  `${bookingLink}?text=${encodeURIComponent(
+    `Hello, I'd like to book the ${roomName}. Please share availability and rates.`,
+  )}`;
 
 const rooms = [
   {
     name: "Standard Room",
     detail: "A considered, comfortable retreat for solo travellers and couples.",
     image:
-      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1100&q=85",
-    alt: "Warmly lit, refined guest room with a king bed",
+      "/room-standard.jpeg",
+    alt: "White bed dressed with charcoal cushions and folded towels",
     size: "25 sqm",
     bed: "1 bed",
   },
@@ -19,8 +23,8 @@ const rooms = [
     name: "Deluxe Room",
     detail: "More room to unwind, with thoughtful details and garden views.",
     image:
-      "https://images.unsplash.com/photo-1617104678098-de229db51175?auto=format&fit=crop&w=1100&q=85",
-    alt: "Bright deluxe hotel room with a sitting area",
+      "/room-deluxe.jpeg",
+    alt: "Double bed with a timber frame beneath a pendant light",
     size: "32 sqm",
     bed: "1 queen bed",
   },
@@ -28,8 +32,8 @@ const rooms = [
     name: "Deluxe Double",
     detail: "A generous stay made for slow mornings and longer escapes.",
     image:
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1100&q=85",
-    alt: "Spacious hotel suite with soft neutral furnishings",
+      "/room-deluxe-double.jpeg",
+    alt: "Bright guest room with a large bed and bedside table",
     size: "38 sqm",
     bed: "1 king bed",
   },
@@ -93,7 +97,7 @@ export default function ResortHome() {
       </header>
 
       <section className="hero" id="home" aria-labelledby="hero-title">
-        <div className="hero-image" role="img" aria-label="A tranquil lakeside landscape at golden hour" />
+        <div className="hero-image" role="img" aria-label="A tree-lined aerial view of the Grand Alton Resort" />
         <div className="hero-shade" />
         <div className="hero-meta"><span>EST. 2024</span><span>OTONGLO · KISUMU, KENYA</span></div>
         <div className="hero-content">
@@ -133,7 +137,7 @@ export default function ResortHome() {
       <section className="stay-section section-pad" id="stay">
         <div className="section-kicker"><span>02 / REST EASY</span><span>ROOMS &amp; SUITES</span></div>
         <div className="section-heading-row"><div><p className="eyebrow">YOUR ROOM IS READY</p><h2>Stay a little <em>longer.</em></h2></div><p>Settle into a space that feels considered, comfortable, and entirely your own.</p></div>
-        <div className="room-grid">{rooms.map((room, index) => <article className="room-card" key={room.name}><a className="room-image" href={bookingLink} target="_blank" rel="noreferrer" aria-label={`Enquire about the ${room.name}`}><Image src={room.image} alt={room.alt} fill sizes="(max-width: 640px) 100vw, 33vw" /><span className="image-index">0{index + 1}</span><span className="image-arrow" aria-hidden="true">↗</span></a><div className="room-card-content"><div className="room-title-row"><h3>{room.name}</h3><span>{room.size}</span></div><p>{room.detail}</p><div className="room-bottom"><span>{room.bed}</span><a href={bookingLink} target="_blank" rel="noreferrer">ENQUIRE <span aria-hidden="true">↗</span></a></div></div></article>)}</div>
+        <div className="room-grid">{rooms.map((room, index) => <article className="room-card" key={room.name}><a className="room-image" href={getRoomBookingLink(room.name)} target="_blank" rel="noreferrer" aria-label={`Book the ${room.name} on WhatsApp`}><Image src={room.image} alt={room.alt} fill sizes="(max-width: 640px) 100vw, 33vw" /><span className="image-index">0{index + 1}</span><span className="image-arrow" aria-hidden="true">↗</span></a><div className="room-card-content"><div className="room-title-row"><h3>{room.name}</h3><span>{room.size}</span></div><p>{room.detail}</p><div className="room-bottom"><span>{room.bed}</span><a href={getRoomBookingLink(room.name)} target="_blank" rel="noreferrer" aria-label={`Book the ${room.name} on WhatsApp`}>ENQUIRE <span aria-hidden="true">↗</span></a></div></div></article>)}</div>
         <div className="stay-footnote"><span>Every stay comes with the little things that make a difference.</span><span>For rates and availability, speak with our team directly.</span></div>
       </section>
 
