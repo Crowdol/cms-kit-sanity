@@ -4,6 +4,10 @@ import { useState } from "react";
 import Image from "next/image";
 
 const bookingLink = "https://wa.me/254794000020";
+const getRoomBookingLink = (roomName: string) =>
+  `${bookingLink}?text=${encodeURIComponent(
+    `Hello, I'd like to book the ${roomName}. Please share availability and rates.`,
+  )}`;
 
 const rooms = [
   {
@@ -133,7 +137,7 @@ export default function ResortHome() {
       <section className="stay-section section-pad" id="stay">
         <div className="section-kicker"><span>02 / REST EASY</span><span>ROOMS &amp; SUITES</span></div>
         <div className="section-heading-row"><div><p className="eyebrow">YOUR ROOM IS READY</p><h2>Stay a little <em>longer.</em></h2></div><p>Settle into a space that feels considered, comfortable, and entirely your own.</p></div>
-        <div className="room-grid">{rooms.map((room, index) => <article className="room-card" key={room.name}><a className="room-image" href={bookingLink} target="_blank" rel="noreferrer" aria-label={`Enquire about the ${room.name}`}><Image src={room.image} alt={room.alt} fill sizes="(max-width: 640px) 100vw, 33vw" /><span className="image-index">0{index + 1}</span><span className="image-arrow" aria-hidden="true">↗</span></a><div className="room-card-content"><div className="room-title-row"><h3>{room.name}</h3><span>{room.size}</span></div><p>{room.detail}</p><div className="room-bottom"><span>{room.bed}</span><a href={bookingLink} target="_blank" rel="noreferrer">ENQUIRE <span aria-hidden="true">↗</span></a></div></div></article>)}</div>
+        <div className="room-grid">{rooms.map((room, index) => <article className="room-card" key={room.name}><a className="room-image" href={getRoomBookingLink(room.name)} target="_blank" rel="noreferrer" aria-label={`Book the ${room.name} on WhatsApp`}><Image src={room.image} alt={room.alt} fill sizes="(max-width: 640px) 100vw, 33vw" /><span className="image-index">0{index + 1}</span><span className="image-arrow" aria-hidden="true">↗</span></a><div className="room-card-content"><div className="room-title-row"><h3>{room.name}</h3><span>{room.size}</span></div><p>{room.detail}</p><div className="room-bottom"><span>{room.bed}</span><a href={getRoomBookingLink(room.name)} target="_blank" rel="noreferrer" aria-label={`Book the ${room.name} on WhatsApp`}>ENQUIRE <span aria-hidden="true">↗</span></a></div></div></article>)}</div>
         <div className="stay-footnote"><span>Every stay comes with the little things that make a difference.</span><span>For rates and availability, speak with our team directly.</span></div>
       </section>
 
