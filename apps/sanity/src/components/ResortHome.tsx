@@ -14,8 +14,8 @@ const rooms = [
     name: "Standard Room",
     detail: "A considered, comfortable retreat for solo travellers and couples.",
     image:
-      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1100&q=85",
-    alt: "Warmly lit, refined guest room with a king bed",
+      "/room-standard.jpeg",
+    alt: "White bed dressed with charcoal cushions and folded towels",
     size: "25 sqm",
     bed: "1 bed",
   },
@@ -23,8 +23,8 @@ const rooms = [
     name: "Deluxe Room",
     detail: "More room to unwind, with thoughtful details and garden views.",
     image:
-      "https://images.unsplash.com/photo-1617104678098-de229db51175?auto=format&fit=crop&w=1100&q=85",
-    alt: "Bright deluxe hotel room with a sitting area",
+      "/room-deluxe.jpeg",
+    alt: "Double bed with a timber frame beneath a pendant light",
     size: "32 sqm",
     bed: "1 queen bed",
   },
@@ -32,8 +32,8 @@ const rooms = [
     name: "Deluxe Double",
     detail: "A generous stay made for slow mornings and longer escapes.",
     image:
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1100&q=85",
-    alt: "Spacious hotel suite with soft neutral furnishings",
+      "/room-deluxe-double.jpeg",
+    alt: "Bright guest room with a large bed and bedside table",
     size: "38 sqm",
     bed: "1 king bed",
   },
