@@ -1,13 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 const bookingLink = "https://wa.me/254794000020";
-const getRoomBookingLink = (roomName: string) =>
-  `${bookingLink}?text=${encodeURIComponent(
-    `Hello, I'd like to book the ${roomName}. Please share availability and rates.`,
-  )}`;
+const getNextDate = (date: string) => {
+  const [year, month, day] = date.split("-").map(Number);
+  return new Date(Date.UTC(year, month - 1, day + 1)).toISOString().slice(0, 10);
+};
+const formatBookingDate = (date: string) =>
+  new Intl.DateTimeFormat("en-KE", {
+    day: "numeric",
+    month: "long",
+    timeZone: "UTC",
+    year: "numeric",
+  }).format(new Date(`${date}T12:00:00Z`));
 
 const rooms = [
   {
@@ -46,8 +53,8 @@ const experiences = [
     category: "DINING",
     text: "Settle in for Kenyan favourites, continental classics, and easy evenings at the bar.",
     image:
-      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85",
-    alt: "An intimate restaurant table set for dinner",
+      "/c5dffca8-replacement-image-3.jpg",
+    alt: "A selection of freshly prepared dishes served at the resort",
   },
   {
     number: "02",
@@ -55,8 +62,8 @@ const experiences = [
     category: "GATHERINGS",
     text: "From focused meetings to life's big celebrations, find a space that brings people together.",
     image:
-      "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=85",
-    alt: "An elegant event venue arranged for a celebration",
+      "/c5dffca8-replacement-image-4.jpg",
+    alt: "A chef preparing fresh vegetables in the resort kitchen",
   },
 ];
 
@@ -65,10 +72,28 @@ export default function ResortHome() {
   const [arrival, setArrival] = useState("");
   const [departure, setDeparture] = useState("");
   const [guests, setGuests] = useState("2 guests");
+  const [selectedRoom, setSelectedRoom] = useState("");
+  const [today, setToday] = useState("");
+
+  useEffect(() => {
+    const now = new Date();
+    setToday(
+      new Date(now.getTime() - now.getTimezoneOffset() * 60_000)
+        .toISOString()
+        .slice(0, 10),
+    );
+  }, []);
 
   const checkAvailability = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const note = `Hello, I'd like to enquire about a stay${arrival ? ` from ${arrival}` : ""}${departure ? ` to ${departure}` : ""} for ${guests}.`;
+    const note = [
+      "Hello, I'd like to check availability at The Grand Alton Resort.",
+      `Room: ${selectedRoom}`,
+      `Check-in: ${formatBookingDate(arrival)}`,
+      `Check-out: ${formatBookingDate(departure)}`,
+      `Guests: ${guests}`,
+      "Please confirm availability and share the rate.",
+    ].join("\n");
     window.open(`${bookingLink}?text=${encodeURIComponent(note)}`, "_blank", "noopener,noreferrer");
   };
 
@@ -110,11 +135,12 @@ export default function ResortHome() {
         <div className="hero-side-note">WESTERN KENYA&nbsp; / &nbsp;00°06′S 34°45′E</div>
       </section>
 
-      <section className="booking-wrap" aria-label="Check availability">
+      <section className="booking-wrap" id="availability" aria-label="Check availability">
         <form className="booking-bar" onSubmit={checkAvailability}>
           <div className="booking-intro"><span className="eyebrow">MAKE YOURSELF AT HOME</span><strong>Plan your stay</strong></div>
-          <label className="booking-field"><span>CHECK IN</span><input aria-label="Check-in date" type="date" value={arrival} onChange={(event) => setArrival(event.target.value)} /></label>
-          <label className="booking-field"><span>CHECK OUT</span><input aria-label="Check-out date" type="date" value={departure} onChange={(event) => setDeparture(event.target.value)} /></label>
+          <label className="booking-field"><span>ROOM</span><select aria-label="Room type" required value={selectedRoom} onChange={(event) => setSelectedRoom(event.target.value)}><option value="" disabled>Choose a room</option>{rooms.map((room) => <option key={room.name} value={room.name}>{room.name}</option>)}</select></label>
+          <label className="booking-field"><span>CHECK IN</span><input aria-label="Check-in date" type="date" min={today || undefined} required value={arrival} onChange={(event) => { const nextArrival = event.target.value; setArrival(nextArrival); if (departure && departure <= nextArrival) setDeparture(""); }} /></label>
+          <label className="booking-field"><span>CHECK OUT</span><input aria-label="Check-out date" type="date" min={arrival ? getNextDate(arrival) : today || undefined} required value={departure} onChange={(event) => setDeparture(event.target.value)} /></label>
           <label className="booking-field booking-guests"><span>GUESTS</span><select aria-label="Number of guests" value={guests} onChange={(event) => setGuests(event.target.value)}><option>1 guest</option><option>2 guests</option><option>3 guests</option><option>4 guests</option><option>5 guests</option><option>6 guests</option></select></label>
           <button className="button button-dark" type="submit">Check availability <span aria-hidden="true">↗</span></button>
         </form>
@@ -127,8 +153,8 @@ export default function ResortHome() {
           <div className="story-copy"><p className="lead">Just five minutes from the airport, a different pace is waiting.</p><p>At The Grand Alton, the warmth of Kenyan hospitality comes naturally. Come for a restful night, a table shared with friends, or a celebration worth remembering. Stay for the feeling of being looked after.</p><a className="text-link" href="https://maps.google.com/?q=The+Grand+Alton+Resort+Kisumu" target="_blank" rel="noreferrer">Find us in Kisumu <span aria-hidden="true">↗</span></a></div>
         </div>
         <div className="story-visuals">
-          <figure className="story-photo story-photo-main"><Image src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=85" alt="Resort grounds surrounded by lush tropical greenery" fill sizes="(max-width: 640px) 65vw, 60vw" /><figcaption>YOUR OWN QUIET CORNER</figcaption></figure>
-          <figure className="story-photo story-photo-detail"><Image src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=85" alt="A welcoming lounge with natural textures and warm light" fill sizes="(max-width: 640px) 40vw, 30vw" /></figure>
+          <figure className="story-photo story-photo-main"><Image src="/c5dffca8-replacement-image-1.jpg" alt="The Grand Alton Resort exterior viewed from the entrance drive" fill sizes="(max-width: 640px) 65vw, 60vw" /><figcaption>YOUR OWN QUIET CORNER</figcaption></figure>
+          <figure className="story-photo story-photo-detail"><Image src="/c5dffca8-replacement-image-2.jpg" alt="The resort facade and entrance steps beneath a clear sky" fill sizes="(max-width: 640px) 40vw, 30vw" /></figure>
           <div className="story-note"><span className="note-mark">GA</span><p>Thoughtfully hosted.<br /><em>Wonderfully Kisumu.</em></p><span className="note-rule" /></div>
         </div>
         <div className="stat-row"><div><strong>5 <small>min</small></strong><span>from Kisumu International Airport</span></div><div><strong>11<small>+</small></strong><span>event spaces to make your own</span></div><div><strong>2024</strong><span>welcoming guests since</span></div><a className="text-link" href="tel:+254794000020">Talk to our team <span aria-hidden="true">↗</span></a></div>
@@ -137,8 +163,8 @@ export default function ResortHome() {
       <section className="stay-section section-pad" id="stay">
         <div className="section-kicker"><span>02 / REST EASY</span><span>ROOMS &amp; SUITES</span></div>
         <div className="section-heading-row"><div><p className="eyebrow">YOUR ROOM IS READY</p><h2>Stay a little <em>longer.</em></h2></div><p>Settle into a space that feels considered, comfortable, and entirely your own.</p></div>
-        <div className="room-grid">{rooms.map((room, index) => <article className="room-card" key={room.name}><a className="room-image" href={getRoomBookingLink(room.name)} target="_blank" rel="noreferrer" aria-label={`Book the ${room.name} on WhatsApp`}><Image src={room.image} alt={room.alt} fill sizes="(max-width: 640px) 100vw, 33vw" /><span className="image-index">0{index + 1}</span><span className="image-arrow" aria-hidden="true">↗</span></a><div className="room-card-content"><div className="room-title-row"><h3>{room.name}</h3><span>{room.size}</span></div><p>{room.detail}</p><div className="room-bottom"><span>{room.bed}</span><a href={getRoomBookingLink(room.name)} target="_blank" rel="noreferrer" aria-label={`Book the ${room.name} on WhatsApp`}>ENQUIRE <span aria-hidden="true">↗</span></a></div></div></article>)}</div>
-        <div className="stay-footnote"><span>Every stay comes with the little things that make a difference.</span><span>For rates and availability, speak with our team directly.</span></div>
+        <div className="room-grid">{rooms.map((room, index) => <article className="room-card" key={room.name}><a className="room-image" href="#availability" onClick={() => setSelectedRoom(room.name)} aria-label={`Choose dates for the ${room.name}`}><Image src={room.image} alt={room.alt} fill sizes="(max-width: 640px) 100vw, 33vw" /><span className="image-index">0{index + 1}</span><span className="image-arrow" aria-hidden="true">↗</span></a><div className="room-card-content"><div className="room-title-row"><h3>{room.name}</h3><span>{room.size}</span></div><p>{room.detail}</p><div className="room-bottom"><span>{room.bed}</span><a href="#availability" onClick={() => setSelectedRoom(room.name)} aria-label={`Choose dates for the ${room.name}`}>CHECK DATES <span aria-hidden="true">↗</span></a></div></div></article>)}</div>
+        <div className="stay-footnote"><span>Every stay comes with the little things that make a difference.</span><span>Choose dates above to send an availability request to our WhatsApp team.</span></div>
       </section>
 
       <section className="experience-section section-pad" id="experiences">
